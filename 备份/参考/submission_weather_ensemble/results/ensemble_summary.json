@@ -1,0 +1,21 @@
+{
+  "validation_macro_f1": 0.9425,
+  "validation_accuracy": 0.9507,
+  "preprocessing": "PIL bilinear resize, ImageNet normalization",
+  "models": [
+    {
+      "checkpoint": "results/weather_efficientnet_b2_best.pth",
+      "model_name": "efficientnet_b2",
+      "image_size": 260,
+      "weight": 0.4,
+      "single_model_validation_macro_f1": 0.9371
+    },
+    {
+      "checkpoint": "results/weather_efficientnet_b0_best.pth",
+      "model_name": "efficientnet_b0",
+      "image_size": 224,
+      "weight": 0.6,
+      "single_model_validation_macro_f1": 0.9282
+    }
+  ]
+}

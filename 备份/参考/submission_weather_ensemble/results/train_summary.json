@@ -1,0 +1,33 @@
+{
+  "best_model": "D:\\1-compitition\\Ruicoo\\results\\weather_efficientnet_b2_best.pth",
+  "best_val_macro_f1": 0.9371136702781424,
+  "labels": [
+    "cloudy",
+    "rainy",
+    "snowy",
+    "sunny"
+  ],
+  "full_counts": {
+    "cloudy": 2184,
+    "rainy": 446,
+    "snowy": 403,
+    "sunny": 1966
+  },
+  "train_counts": {
+    "cloudy": 1856,
+    "rainy": 379,
+    "snowy": 343,
+    "sunny": 1671
+  },
+  "val_counts": {
+    "cloudy": 328,
+    "rainy": 67,
+    "snowy": 60,
+    "sunny": 295
+  },
+  "batch_size": 16,
+  "epochs": 16,
+  "image_size": 260,
+  "model_name": "efficientnet_b2",
+  "pretrained": true
+}

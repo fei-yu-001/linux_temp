@@ -1,0 +1,59 @@
+{
+  "model_name": "efficientnet_b0",
+  "task": "weather_classification",
+  "labels": [
+    "cloudy",
+    "rainy",
+    "snowy",
+    "sunny"
+  ],
+  "approach": "EfficientNet-B0 + ImageNet pretrained + Model Soup (3 seeds) + TTA + Temperature Scaling",
+  "training_config": {
+    "model": "torchvision efficientnet_b0",
+    "pretrained": "ImageNet IMAGENET1K_V1",
+    "image_size": 224,
+    "batch_size": 16,
+    "epochs_per_seed": 50,
+    "n_seeds": 3,
+    "seeds": [
+      42,
+      142,
+      242
+    ],
+    "optimizer": "AdamW",
+    "lr_backbone": 0.0005,
+    "lr_head": 0.005,
+    "weight_decay": 0.01,
+    "scheduler": "CosineAnnealingLR",
+    "label_smoothing": 0.1,
+    "class_weights": "balanced",
+    "data_augmentation": [
+      "RandomCrop",
+      "RandomHorizontalFlip",
+      "RandomRotation",
+      "ColorJitter",
+      "RandomAffine",
+      "RandomErasing"
+    ],
+    "train_val_split": "StratifiedShuffleSplit 85/15",
+    "data_cleaning": "cleanlab (ResNet18 features, max 5% removal)"
+  },
+  "results": {
+    "seed_42_best_f1": 0.9231,
+    "seed_142_best_f1": 0.922,
+    "seed_242_best_f1": 0.9268,
+    "model_soup_val_f1": 0.9185,
+    "best_temperature": 1.0
+  },
+  "inference_config": {
+    "tta": [
+      "original",
+      "horizontal_flip"
+    ],
+    "temperature_scaling": 1.0
+  },
+  "files": {
+    "main_py": "main.py",
+    "weights": "results/weather_efficientnet_b0.pth"
+  }
+}

@@ -1,0 +1,304 @@
+from pandas.core import (
+训练数据目录: C:\Users\feiyu\Desktop\睿抗\datasets\6a39ed934d7b489daf5f80a4-momodel\train
+结果目录: C:\Users\feiyu\Desktop\睿抗\all\results
+
+跳过清洗（已有结果），使用 4750 个样本
+
+============================================================
+第二步：DINOv2 ViT-L/14 特征提取 (image_size=518)
+============================================================
+待提取样本数: 4750
+device: cpu
+加载 vit_large_patch14_dinov2.lvd142m（离线模式）...
+模型加载完成
+  特征提取 8/4750
+  特征提取 80/4750
+  特征提取 160/4750
+  特征提取 240/4750
+  特征提取 320/4750
+  特征提取 400/4750
+  特征提取 480/4750
+  特征提取 560/4750
+  特征提取 640/4750
+  特征提取 720/4750
+  特征提取 800/4750
+  特征提取 880/4750
+  特征提取 960/4750
+  特征提取 1040/4750
+  特征提取 1120/4750
+  特征提取 1200/4750
+  特征提取 1280/4750
+  特征提取 1360/4750
+  特征提取 1440/4750
+  特征提取 1520/4750
+  特征提取 1600/4750
+  特征提取 1680/4750
+  特征提取 1760/4750
+  特征提取 1840/4750
+  特征提取 1920/4750
+  特征提取 2000/4750
+  特征提取 2080/4750
+  特征提取 2160/4750
+  特征提取 2240/4750
+  特征提取 2320/4750
+  特征提取 2400/4750
+  特征提取 2480/4750
+  特征提取 2560/4750
+  特征提取 2640/4750
+  特征提取 2720/4750
+  特征提取 2800/4750
+  特征提取 2880/4750
+  特征提取 2960/4750
+  特征提取 3040/4750
+  特征提取 3120/4750
+  特征提取 3200/4750
+  特征提取 3280/4750
+  特征提取 3360/4750
+  特征提取 3440/4750
+  特征提取 3520/4750
+  特征提取 3600/4750
+  特征提取 3680/4750
+  特征提取 3760/4750
+  特征提取 3840/4750
+  特征提取 3920/4750
+  特征提取 4000/4750
+  特征提取 4080/4750
+  特征提取 4160/4750
+  特征提取 4240/4750
+  特征提取 4320/4750
+  特征提取 4400/4750
+  特征提取 4480/4750
+  特征提取 4560/4750
+  特征提取 4640/4750
+  特征提取 4720/4750
+特征维度: (4750, 1024)
+
+[验证] 用 sklearn LogisticRegression 快速验证特征质量 ...
+[验证] 5-fold F1 macro: 0.7936 ± 0.0322
+[警告] 特征质量偏低（<0.85），linear probe 效果可能不理想！
+       可能原因：模型未正确加载预训练权重，或特征提取方式有误
+特征缓存到 C:\Users\feiyu\Desktop\睿抗\all\results\dinov2_features.npz
+
+============================================================
+第三步：DINOv2 linear head 训练（3 seeds → Model Soup）
+============================================================
+特征维度: 1024, 样本数: 4750, 类别数: 4
+特征已 L2 归一化
+训练集: 4037, 验证集: 713
+类别权重: [0.5740899 3.0399096 3.214172  0.6180343]
+类别先验: [0.43547189 0.08223929 0.07778053 0.4045083 ]
+Logit Adjustment: [-0.83132502 -2.49812203 -2.55386401 -0.905083  ]
+
+--- Seed 1/3 (seed=42) ---
+  Epoch 1/200  val_f1=0.4964  best=0.4964
+  Epoch 2/200  val_f1=0.6348  best=0.6348
+  Epoch 3/200  val_f1=0.6555  best=0.6555
+  Epoch 4/200  val_f1=0.6656  best=0.6656
+  Epoch 5/200  val_f1=0.6873  best=0.6873
+  Epoch 10/200  val_f1=0.7155  best=0.7256
+  Epoch 20/200  val_f1=0.7503  best=0.7503
+  Epoch 30/200  val_f1=0.7329  best=0.7518
+  Epoch 40/200  val_f1=0.7306  best=0.7518
+  Epoch 50/200  val_f1=0.7526  best=0.7536
+  Epoch 60/200  val_f1=0.7518  best=0.7536
+  Epoch 70/200  val_f1=0.7448  best=0.7568
+  Epoch 80/200  val_f1=0.7421  best=0.7568
+  Epoch 90/200  val_f1=0.7479  best=0.7568
+  Epoch 100/200  val_f1=0.7480  best=0.7568
+  Epoch 110/200  val_f1=0.7474  best=0.7612
+  Epoch 120/200  val_f1=0.7452  best=0.7646
+  Epoch 130/200  val_f1=0.7472  best=0.7646
+  Epoch 140/200  val_f1=0.7464  best=0.7646
+  Epoch 150/200  val_f1=0.7500  best=0.7646
+  Epoch 160/200  val_f1=0.7491  best=0.7646
+  Epoch 170/200  val_f1=0.7449  best=0.7646
+  Epoch 180/200  val_f1=0.7406  best=0.7646
+  Epoch 190/200  val_f1=0.7415  best=0.7646
+  Epoch 200/200  val_f1=0.7415  best=0.7646
+  Seed 1 best F1: 0.7646
+
+--- Seed 2/3 (seed=142) ---
+  Epoch 1/200  val_f1=0.5024  best=0.5024
+  Epoch 2/200  val_f1=0.6172  best=0.6172
+  Epoch 3/200  val_f1=0.6555  best=0.6555
+  Epoch 4/200  val_f1=0.6797  best=0.6797
+  Epoch 5/200  val_f1=0.6855  best=0.6855
+  Epoch 10/200  val_f1=0.7328  best=0.7328
+  Epoch 20/200  val_f1=0.7489  best=0.7489
+  Epoch 30/200  val_f1=0.7411  best=0.7489
+  Epoch 40/200  val_f1=0.7413  best=0.7527
+  Epoch 50/200  val_f1=0.7361  best=0.7593
+  Epoch 60/200  val_f1=0.7466  best=0.7613
+  Epoch 70/200  val_f1=0.7536  best=0.7613
+  Epoch 80/200  val_f1=0.7496  best=0.7613
+  Epoch 90/200  val_f1=0.7468  best=0.7613
+  Epoch 100/200  val_f1=0.7378  best=0.7613
+  Epoch 110/200  val_f1=0.7437  best=0.7613
+  Epoch 120/200  val_f1=0.7506  best=0.7613
+  Epoch 130/200  val_f1=0.7454  best=0.7613
+  Epoch 140/200  val_f1=0.7404  best=0.7613
+  Epoch 150/200  val_f1=0.7384  best=0.7613
+  Epoch 160/200  val_f1=0.7452  best=0.7613
+  Epoch 170/200  val_f1=0.7478  best=0.7613
+  Epoch 180/200  val_f1=0.7469  best=0.7613
+  Epoch 190/200  val_f1=0.7426  best=0.7613
+  Epoch 200/200  val_f1=0.7410  best=0.7613
+  Seed 2 best F1: 0.7613
+
+--- Seed 3/3 (seed=242) ---
+  Epoch 1/200  val_f1=0.5063  best=0.5063
+  Epoch 2/200  val_f1=0.6469  best=0.6469
+  Epoch 3/200  val_f1=0.6891  best=0.6891
+  Epoch 4/200  val_f1=0.7059  best=0.7059
+  Epoch 5/200  val_f1=0.7119  best=0.7119
+  Epoch 10/200  val_f1=0.7295  best=0.7295
+  Epoch 20/200  val_f1=0.7368  best=0.7441
+  Epoch 30/200  val_f1=0.7429  best=0.7562
+  Epoch 40/200  val_f1=0.7481  best=0.7562
+  Epoch 50/200  val_f1=0.7370  best=0.7562
+  Epoch 60/200  val_f1=0.7459  best=0.7562
+  Epoch 70/200  val_f1=0.7491  best=0.7590
+  Epoch 80/200  val_f1=0.7520  best=0.7590
+  Epoch 90/200  val_f1=0.7401  best=0.7590
+  Epoch 100/200  val_f1=0.7540  best=0.7590
+  Epoch 110/200  val_f1=0.7449  best=0.7590
+  Epoch 120/200  val_f1=0.7451  best=0.7605
+  Epoch 130/200  val_f1=0.7545  best=0.7605
+  Epoch 140/200  val_f1=0.7483  best=0.7605
+  Epoch 150/200  val_f1=0.7465  best=0.7605
+  Epoch 160/200  val_f1=0.7474  best=0.7605
+  Epoch 170/200  val_f1=0.7465  best=0.7605
+  Epoch 180/200  val_f1=0.7508  best=0.7605
+  Epoch 190/200  val_f1=0.7449  best=0.7605
+  Epoch 200/200  val_f1=0.7449  best=0.7605
+  Seed 3 best F1: 0.7605
+
+构建 Model Soup ...
+Model Soup F1: 0.7647
+单模型 F1: [0.7645578403289907, 0.7612658359577322, 0.7604531500760211]
+
+[警告] linear head F1 偏低（0.7647 < 0.85）！
+       正常 DINOv2 linear probe 应该 >= 0.90，请检查特征提取是否正确
+       建议删除 results/dinov2_features.npz 重新提取
+保存到 C:\Users\feiyu\Desktop\睿抗\all\results\weather_dinov2_linear_best.pth
+
+阈值搜索 ...
+最佳温度: 1.0, F1: 0.7647
+
+============================================================
+第四步：ConvNeXt V2-Base 微调训练
+============================================================
+device: cpu
+image_size: 224
+训练集: 4027, 验证集: 723
+类别权重: [0.57299374 3.06935976 3.21645367 0.61801719]
+加载 convnextv2_base.fcmae_ft_in1k（离线模式）...
+'(ProtocolError('Connection aborted.', ConnectionAbortedError(10053, '你的主机中的软件中止了一个已建立的连接。', None, 10053, None)), '(Request ID: 96b4a3ae-6fd4-4237-b5ec-3db96987bd91)')' thrown while requesting HEAD https://huggingface.co/timm/convnextv2_base.fcmae_ft_in1k/resolve/main/model.safetensors
+Retrying in 1s [Retry 1/5].
+'(ProtocolError('Connection aborted.', ConnectionAbortedError(10053, '你的主机中的软件中止了一个已建立的连接。', None, 10053, None)), '(Request ID: 4233f5a6-d553-41d3-bec3-a6abf0ea5cfc)')' thrown while requesting HEAD https://huggingface.co/timm/convnextv2_base.fcmae_ft_in1k/resolve/main/model.safetensors
+Retrying in 2s [Retry 2/5].
+'(ProtocolError('Connection aborted.', ConnectionAbortedError(10053, '你的主机中的软件中止了一个已建立的连接。', None, 10053, None)), '(Request ID: 9b351180-9b9b-41ec-80b1-d9fcc6efedc4)')' thrown while requesting HEAD https://huggingface.co/timm/convnextv2_base.fcmae_ft_in1k/resolve/main/model.safetensors
+Retrying in 4s [Retry 3/5].
+'(ProtocolError('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)), '(Request ID: 813ea2d4-40fb-48b9-9b70-0f4b1f4b8fe6)')' thrown while requesting HEAD https://huggingface.co/timm/convnextv2_base.fcmae_ft_in1k/resolve/main/model.safetensors
+Retrying in 8s [Retry 4/5].
+'(ProtocolError('Connection aborted.', ConnectionAbortedError(10053, '你的主机中的软件中止了一个已建立的连接。', None, 10053, None)), '(Request ID: ab405417-cc59-4a60-9257-d3dccd5311b5)')' thrown while requesting HEAD https://huggingface.co/timm/convnextv2_base.fcmae_ft_in1k/resolve/main/model.safetensors
+Retrying in 8s [Retry 5/5].
+'(ProtocolError('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)), '(Request ID: 5081cba6-4c1e-444f-9447-afebb450c0b4)')' thrown while requesting HEAD https://huggingface.co/timm/convnextv2_base.fcmae_ft_in1k/resolve/main/model.safetensors
+'(ProtocolError('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)), '(Request ID: e184fab7-648c-4f4f-9582-7cb37a7e3af2)')' thrown while requesting HEAD https://huggingface.co/timm/convnextv2_base.fcmae_ft_in1k/resolve/main/pytorch_model.bin
+Retrying in 1s [Retry 1/5].
+'(ProtocolError('Connection aborted.', ConnectionResetError(10054, '远程主机强迫关闭了一个现有的连接。', None, 10054, None)), '(Request ID: 0ccb037f-2d95-47a0-af13-00581cc9612d)')' thrown while requesting HEAD https://huggingface.co/timm/convnextv2_base.fcmae_ft_in1k/resolve/main/pytorch_model.bin
+Retrying in 2s [Retry 2/5].
+'(ProtocolError('Connection aborted.', ConnectionAbortedError(10053, '你的主机中的软件中止了一个已建立的连接。', None, 10053, None)), '(Request ID: 1a16a299-a136-4570-8b31-ad84203db2b8)')' thrown while requesting HEAD https://huggingface.co/timm/convnextv2_base.fcmae_ft_in1k/resolve/main/pytorch_model.bin
+Retrying in 4s [Retry 3/5].
+'(ProtocolError('Connection aborted.', ConnectionAbortedError(10053, '你的主机中的软件中止了一个已建立的连接。', None, 10053, None)), '(Request ID: 15134616-e652-459a-9fde-a3db28515195)')' thrown while requesting HEAD https://huggingface.co/timm/convnextv2_base.fcmae_ft_in1k/resolve/main/pytorch_model.bin
+Retrying in 8s [Retry 4/5].
+'(ProtocolError('Connection aborted.', ConnectionAbortedError(10053, '你的主机中的软件中止了一个已建立的连接。', None, 10053, None)), '(Request ID: fa871f55-896f-45dd-836a-2bb37674ccd3)')' thrown while requesting HEAD https://huggingface.co/timm/convnextv2_base.fcmae_ft_in1k/resolve/main/pytorch_model.bin
+Retrying in 8s [Retry 5/5].
+'(MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /timm/convnextv2_base.fcmae_ft_in1k/resolve/main/pytorch_model.bin (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1000)')))"), '(Request ID: 370eef5f-3102-42ac-a385-9afed9b1d2b0)')' thrown while requesting HEAD https://huggingface.co/timm/convnextv2_base.fcmae_ft_in1k/resolve/main/pytorch_model.bin
+urllib3.exceptions.SSLError: [SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1000)
+
+The above exception was the direct cause of the following exception:
+
+Traceback (most recent call last):
+  File "D:\ruangong\anaconda\anaconda_date\Lib\site-packages\requests\adapters.py", line 667, in send
+    resp = conn.urlopen(
+           ^^^^^^^^^^^^^
+  File "D:\ruangong\anaconda\anaconda_date\Lib\site-packages\urllib3\connectionpool.py", line 843, in urlopen
+    retries = retries.increment(
+              ^^^^^^^^^^^^^^^^^^
+  File "D:\ruangong\anaconda\anaconda_date\Lib\site-packages\urllib3\util\retry.py", line 519, in increment
+    raise MaxRetryError(_pool, url, reason) from reason  # type: ignore[arg-type]
+    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+urllib3.exceptions.MaxRetryError: HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /timm/convnextv2_base.fcmae_ft_in1k/resolve/main/pytorch_model.bin (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1000)')))
+
+During handling of the above exception, another exception occurred:
+
+Traceback (most recent call last):
+  File "C:\Users\feiyu\Desktop\睿抗\all\train_final.py", line 692, in <module>
+    main()
+  File "C:\Users\feiyu\Desktop\睿抗\all\train_final.py", line 681, in main
+    convnext_f1 = step4_train_convnext(train_dir, clean_indices, results_dir, epochs=args.epochs_convnext)
+                  ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\feiyu\Desktop\睿抗\all\train_final.py", line 557, in step4_train_convnext
+    model = timm.create_model(model_name, pretrained=True, num_classes=len(LABELS))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\feiyu\AppData\Roaming\Python\Python312\site-packages\timm\models\_factory.py", line 138, in create_model
+    model = create_fn(
+            ^^^^^^^^^^
+  File "C:\Users\feiyu\AppData\Roaming\Python\Python312\site-packages\timm\models\convnext.py", line 1353, in convnextv2_base
+    model = _create_convnext('convnextv2_base', pretrained=pretrained, **dict(model_args, **kwargs))
+            ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\feiyu\AppData\Roaming\Python\Python312\site-packages\timm\models\convnext.py", line 700, in _create_convnext
+    model = build_model_with_cfg(
+            ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\feiyu\AppData\Roaming\Python\Python312\site-packages\timm\models\_builder.py", line 457, in build_model_with_cfg
+    load_pretrained(
+  File "C:\Users\feiyu\AppData\Roaming\Python\Python312\site-packages\timm\models\_builder.py", line 226, in load_pretrained
+    state_dict = load_state_dict_from_hf(pretrained_loc, weights_only=True, cache_dir=cache_dir)
+                 ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\feiyu\AppData\Roaming\Python\Python312\site-packages\timm\models\_hub.py", line 241, in load_state_dict_from_hf
+    cached_file = hf_hub_download(
+                  ^^^^^^^^^^^^^^^^
+  File "C:\Users\feiyu\AppData\Roaming\Python\Python312\site-packages\huggingface_hub\utils\_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\feiyu\AppData\Roaming\Python\Python312\site-packages\huggingface_hub\file_download.py", line 1014, in hf_hub_download
+    return _hf_hub_download_to_cache_dir(
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\feiyu\AppData\Roaming\Python\Python312\site-packages\huggingface_hub\file_download.py", line 1077, in _hf_hub_download_to_cache_dir
+    (url_to_download, etag, commit_hash, expected_size, xet_file_data, head_call_error) = _get_metadata_or_catch_error(
+                                                                                          ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\feiyu\AppData\Roaming\Python\Python312\site-packages\huggingface_hub\file_download.py", line 1550, in _get_metadata_or_catch_error
+    metadata = get_hf_file_metadata(
+               ^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\feiyu\AppData\Roaming\Python\Python312\site-packages\huggingface_hub\utils\_validators.py", line 114, in _inner_fn
+    return fn(*args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\feiyu\AppData\Roaming\Python\Python312\site-packages\huggingface_hub\file_download.py", line 1467, in get_hf_file_metadata
+    r = _request_wrapper(
+        ^^^^^^^^^^^^^^^^^
+  File "C:\Users\feiyu\AppData\Roaming\Python\Python312\site-packages\huggingface_hub\file_download.py", line 283, in _request_wrapper
+    response = _request_wrapper(
+               ^^^^^^^^^^^^^^^^^
+  File "C:\Users\feiyu\AppData\Roaming\Python\Python312\site-packages\huggingface_hub\file_download.py", line 306, in _request_wrapper
+    response = http_backoff(method=method, url=url, **params)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\feiyu\AppData\Roaming\Python\Python312\site-packages\huggingface_hub\utils\_http.py", line 326, in http_backoff
+    raise err
+  File "C:\Users\feiyu\AppData\Roaming\Python\Python312\site-packages\huggingface_hub\utils\_http.py", line 307, in http_backoff
+    response = session.request(method=method, url=url, **kwargs)
+               ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ruangong\anaconda\anaconda_date\Lib\site-packages\requests\sessions.py", line 589, in request
+    resp = self.send(prep, **send_kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ruangong\anaconda\anaconda_date\Lib\site-packages\requests\sessions.py", line 703, in send
+    r = adapter.send(request, **kwargs)
+        ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\feiyu\AppData\Roaming\Python\Python312\site-packages\huggingface_hub\utils\_http.py", line 96, in send
+    return super().send(request, *args, **kwargs)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\ruangong\anaconda\anaconda_date\Lib\site-packages\requests\adapters.py", line 698, in send
+    raise SSLError(e, request=request)
+requests.exceptions.SSLError: (MaxRetryError("HTTPSConnectionPool(host='huggingface.co', port=443): Max retries exceeded with url: /timm/convnextv2_base.fcmae_ft_in1k/resolve/main/pytorch_model.bin (Caused by SSLError(SSLEOFError(8, '[SSL: UNEXPECTED_EOF_WHILE_READING] EOF occurred in violation of protocol (_ssl.c:1000)')))"), '(Request ID: 370eef5f-3102-42ac-a385-9afed9b1d2b0)')
+
+进程已结束，退出代码为 1
