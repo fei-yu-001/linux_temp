@@ -1,0 +1,30 @@
+Paper Figure Summary
+============================================================
+Dataset path: C:\Users\feiyu\Desktop\大创2.0\newagain\ultralytics-main\domestic_dataset
+Classes: 31
+Total images: 14,236
+Total annotations: 16,814
+
+Split statistics:
+  - train: 11,366 images, 13,407 annotations
+  - val: 1,429 images, 1,711 annotations
+  - test: 1,441 images, 1,696 annotations
+
+Model comparison (best epoch by mAP@0.5:0.95):
+  - YOLOv8n: epoch 150, Precision 51.60, Recall 55.93, mAP@0.5 55.30, mAP@0.5:0.95 32.91
+  - YOLOv9c: epoch 150, Precision 56.36, Recall 67.17, mAP@0.5 65.17, mAP@0.5:0.95 40.03
+  - YOLOv10n: epoch 150, Precision 44.78, Recall 50.82, mAP@0.5 48.24, mAP@0.5:0.95 28.97
+  - YOLOv11n: epoch 150, Precision 47.09, Recall 58.23, mAP@0.5 55.23, mAP@0.5:0.95 32.84
+
+Ablation study (best epoch by mAP@0.5:0.95):
+  - Baseline: epoch 150, Precision 47.09, Recall 58.23, mAP@0.5 55.23, mAP@0.5:0.95 32.84
+  - ARConv-Backbone: epoch 25, Precision 37.36, Recall 44.66, mAP@0.5 39.02, mAP@0.5:0.95 22.92
+  - ARConv-Neck: epoch 118, Precision 64.31, Recall 65.48, mAP@0.5 66.39, mAP@0.5:0.95 41.20
+  - ARConv-Head: epoch 115, Precision 60.81, Recall 65.14, mAP@0.5 65.37, mAP@0.5:0.95 40.71
+  - ARConv-Full: epoch 122, Precision 59.36, Recall 63.39, mAP@0.5 64.14, mAP@0.5:0.95 39.85
+
+Publication note:
+  - The ablation figures follow the final five-row table used in the manuscript: Baseline, ARConv-Backbone, ARConv-Neck, ARConv-Head, and ARConv-Full.
+  - The Backbone entry adopts the stabilized backbone run values: Precision 37.36, Recall 44.66, mAP@0.5 39.02, and mAP@0.5:0.95 22.92.
+  - The ARConv-Backbone training curve is omitted from the publication curve figure because the preserved run stops at epoch 75 and shows unstable degradation after its early peak.
+  - Vector versions are exported for the ablation figures in both PDF and SVG formats.

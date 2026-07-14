@@ -1,0 +1,275 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Conway's Game of Life</title>
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+
+    body {
+      background: #0a0a0f;
+      color: #e0e0e0;
+      font-family: 'Segoe UI', system-ui, sans-serif;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    h1 {
+      font-size: 2rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      margin-bottom: 4px;
+      color: #fff;
+    }
+
+    .subtitle {
+      font-size: 0.85rem;
+      color: #666;
+      margin-bottom: 16px;
+    }
+
+    canvas {
+      border: 1px solid #222;
+      cursor: crosshair;
+      background: #0d0d14;
+    }
+
+    .controls {
+      display: flex;
+      gap: 12px;
+      margin-top: 16px;
+      align-items: center;
+    }
+
+    button {
+      background: #1a1a2e;
+      border: 1px solid #333;
+      color: #ccc;
+      padding: 8px 20px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      cursor: pointer;
+      border-radius: 4px;
+      transition: background 0.15s, color 0.15s;
+    }
+
+    button:hover { background: #2a2a4e; color: #fff; }
+
+    button.active {
+      background: #3b3b6e;
+      border-color: #5a5aaa;
+      color: #fff;
+    }
+
+    .info {
+      display: flex;
+      gap: 24px;
+      margin-top: 12px;
+      font-size: 0.85rem;
+      color: #555;
+    }
+
+    .info span em { color: #888; font-style: normal; font-weight: 600; }
+
+    .speed-control {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-top: 8px;
+      font-size: 0.8rem;
+      color: #555;
+    }
+
+    .speed-control input[type="range"] {
+      width: 140px;
+      accent-color: #5a5aaa;
+    }
+  </style>
+</head>
+<body>
+  <h1>Game of Life</h1>
+  <p class="subtitle">Conway's Cellular Automaton &mdash; 点击画布切换细胞状态</p>
+  <canvas id="canvas"></canvas>
+  <div class="controls">
+    <button id="btnPlay">开始</button>
+    <button id="btnReset">重置</button>
+    <button id="btnRandom">随机初始化</button>
+  </div>
+  <div class="info">
+    <span>代数: <em id="genCount">0</em></span>
+    <span>存活: <em id="aliveCount">0</em></span>
+  </div>
+  <div class="speed-control">
+    <label>速度:</label>
+    <input type="range" id="speedSlider" min="1" max="30" value="10">
+    <span id="speedLabel">10 代/秒</span>
+  </div>
+
+  <script>
+    const COLS = 80;
+    const ROWS = 50;
+    const CELL_SIZE = 10;
+    const canvas = document.getElementById('canvas');
+    const ctx = canvas.getContext('2d');
+
+    canvas.width = COLS * CELL_SIZE;
+    canvas.height = ROWS * CELL_SIZE;
+
+    let grid = createGrid();
+    let running = false;
+    let generation = 0;
+    let intervalId = null;
+    let speed = 10;
+
+    const btnPlay = document.getElementById('btnPlay');
+    const btnReset = document.getElementById('btnReset');
+    const btnRandom = document.getElementById('btnRandom');
+    const genCountEl = document.getElementById('genCount');
+    const aliveCountEl = document.getElementById('aliveCount');
+    const speedSlider = document.getElementById('speedSlider');
+    const speedLabel = document.getElementById('speedLabel');
+
+    function createGrid() {
+      return Array.from({ length: ROWS }, () => Array(COLS).fill(0));
+    }
+
+    function randomGrid() {
+      return Array.from({ length: ROWS }, () =>
+        Array.from({ length: COLS }, () => Math.random() < 0.3 ? 1 : 0)
+      );
+    }
+
+    function countNeighbors(g, r, c) {
+      let count = 0;
+      for (let dr = -1; dr <= 1; dr++) {
+        for (let dc = -1; dc <= 1; dc++) {
+          if (dr === 0 && dc === 0) continue;
+          const nr = r + dr, nc = c + dc;
+          if (nr >= 0 && nr < ROWS && nc >= 0 && nc < COLS) {
+            count += g[nr][nc];
+          }
+        }
+      }
+      return count;
+    }
+
+    function nextGeneration(g) {
+      const next = createGrid();
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          const n = countNeighbors(g, r, c);
+          if (g[r][c] === 1) {
+            next[r][c] = (n === 2 || n === 3) ? 1 : 0;
+          } else {
+            next[r][c] = n === 3 ? 1 : 0;
+          }
+        }
+      }
+      return next;
+    }
+
+    function draw() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+      // grid lines
+      ctx.strokeStyle = '#1a1a22';
+      ctx.lineWidth = 0.5;
+      for (let r = 0; r <= ROWS; r++) {
+        ctx.beginPath();
+        ctx.moveTo(0, r * CELL_SIZE);
+        ctx.lineTo(canvas.width, r * CELL_SIZE);
+        ctx.stroke();
+      }
+      for (let c = 0; c <= COLS; c++) {
+        ctx.beginPath();
+        ctx.moveTo(c * CELL_SIZE, 0);
+        ctx.lineTo(c * CELL_SIZE, canvas.height);
+        ctx.stroke();
+      }
+
+      // alive cells
+      let alive = 0;
+      for (let r = 0; r < ROWS; r++) {
+        for (let c = 0; c < COLS; c++) {
+          if (grid[r][c] === 1) {
+            alive++;
+            ctx.fillStyle = '#6a9fff';
+            ctx.fillRect(
+              c * CELL_SIZE + 1,
+              r * CELL_SIZE + 1,
+              CELL_SIZE - 2,
+              CELL_SIZE - 2
+            );
+          }
+        }
+      }
+
+      genCountEl.textContent = generation;
+      aliveCountEl.textContent = alive;
+    }
+
+    function step() {
+      grid = nextGeneration(grid);
+      generation++;
+      draw();
+    }
+
+    function startLoop() {
+      if (intervalId) clearInterval(intervalId);
+      intervalId = setInterval(step, 1000 / speed);
+    }
+
+    btnPlay.addEventListener('click', () => {
+      running = !running;
+      btnPlay.textContent = running ? '暂停' : '开始';
+      btnPlay.classList.toggle('active', running);
+      if (running) {
+        startLoop();
+      } else {
+        clearInterval(intervalId);
+        intervalId = null;
+      }
+    });
+
+    btnReset.addEventListener('click', () => {
+      running = false;
+      btnPlay.textContent = '开始';
+      btnPlay.classList.remove('active');
+      clearInterval(intervalId);
+      intervalId = null;
+      grid = createGrid();
+      generation = 0;
+      draw();
+    });
+
+    btnRandom.addEventListener('click', () => {
+      grid = randomGrid();
+      generation = 0;
+      draw();
+    });
+
+    speedSlider.addEventListener('input', () => {
+      speed = parseInt(speedSlider.value);
+      speedLabel.textContent = speed + ' 代/秒';
+      if (running) startLoop();
+    });
+
+    // click to toggle cell
+    canvas.addEventListener('click', (e) => {
+      const c = Math.floor(e.offsetX / CELL_SIZE);
+      const r = Math.floor(e.offsetY / CELL_SIZE);
+      if (r >= 0 && r < ROWS && c >= 0 && c < COLS) {
+        grid[r][c] = grid[r][c] ? 0 : 1;
+        draw();
+      }
+    });
+
+    // initial draw
+    draw();
+  </script>
+</body>
+</html>
